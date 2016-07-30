@@ -1,7 +1,9 @@
-package com.arao.footballmatches;
+package com.arao.footballmatches.home;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.arao.footballmatches.R;
 
 public class HomeActivity extends AppCompatActivity {
 
