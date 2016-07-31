@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import com.arao.footballmatches.R;
 import com.arao.footballmatches.data.entity.League;
-import com.squareup.picasso.Picasso;
+import com.arao.footballmatches.presentation.view.activity.MatchClickListener;
 
 import java.util.List;
 
@@ -19,14 +19,16 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueViewHolder> {
     private final MatchAdapterFactory matchAdapterFactory;
 
     private List<League> leagues;
+    private MatchClickListener matchClickListener;
 
     @Inject
-    public LeagueAdapter(ViewHolderFactory viewHolderFactory, MatchAdapterFactory matchAdapterFactory, Picasso picasso) {
+    public LeagueAdapter(ViewHolderFactory viewHolderFactory, MatchAdapterFactory matchAdapterFactory) {
         this.viewHolderFactory = viewHolderFactory;
         this.matchAdapterFactory = matchAdapterFactory;
     }
 
-    public void setData(List<League> leagues) {
+    public void setData(List<League> leagues, MatchClickListener matchClickListener) {
+        this.matchClickListener = matchClickListener;
         this.leagues = leagues;
         notifyDataSetChanged();
     }
@@ -42,7 +44,7 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueViewHolder> {
     @Override
     public void onBindViewHolder(LeagueViewHolder holder, int position) {
         League league = leagues.get(position);
-        MatchAdapter matchAdapter = matchAdapterFactory.getMatchAdapter(league.getMatches());
+        MatchAdapter matchAdapter = matchAdapterFactory.getMatchAdapter(league.getMatches(), matchClickListener);
 
         String name = league.getName();
 

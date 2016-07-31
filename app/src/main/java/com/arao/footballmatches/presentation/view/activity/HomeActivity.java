@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import com.arao.footballmatches.R;
 import com.arao.footballmatches.data.entity.League;
+import com.arao.footballmatches.data.entity.Match;
 import com.arao.footballmatches.injection.components.HomeComponent;
 import com.arao.footballmatches.presentation.FootballMatchesApplication;
+import com.arao.footballmatches.presentation.navigation.Navigator;
 import com.arao.footballmatches.presentation.presenter.HomePresenter;
 import com.arao.footballmatches.presentation.view.HomeView;
 import com.arao.footballmatches.presentation.view.adapter.LeagueAdapter;
@@ -25,7 +27,7 @@ import butterknife.ButterKnife;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class HomeActivity extends AppCompatActivity implements HomeView {
+public class HomeActivity extends AppCompatActivity implements HomeView, MatchClickListener {
 
     @Inject
     LeagueAdapter leagueAdapter;
@@ -37,6 +39,8 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
     RecyclerView.LayoutManager layoutManager;
     @Inject
     HomePresenter homePresenter;
+    @Inject
+    Navigator navigator;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -65,7 +69,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         loadingLayout.setVisibility(GONE);
         errorView.setVisibility(GONE);
         leaguesRecyclerView.setVisibility(VISIBLE);
-        leagueAdapter.setData(leagues);
+        leagueAdapter.setData(leagues, this);
     }
 
     @Override
@@ -73,6 +77,11 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         errorView.setVisibility(VISIBLE);
         loadingLayout.setVisibility(GONE);
         leaguesRecyclerView.setVisibility(GONE);
+    }
+
+    @Override
+    public void onMatchClick(Match match) {
+        navigator.navigateToUserDetails(this);
     }
 
     private void resolveDependencies() {
@@ -94,5 +103,4 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         leaguesRecyclerView.addItemDecoration(itemDecoration);
         leaguesRecyclerView.setAdapter(leagueAdapter);
     }
-
 }

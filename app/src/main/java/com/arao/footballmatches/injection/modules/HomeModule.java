@@ -21,8 +21,8 @@ import dagger.Provides;
 public class HomeModule {
 
     @Provides
-    LeagueAdapter leagueAdapter(ViewHolderFactory viewHolderFactory, MatchAdapterFactory matchAdapterFactory, Picasso picasso) {
-        return new LeagueAdapter(viewHolderFactory, matchAdapterFactory, picasso);
+    LeagueAdapter leagueAdapter(ViewHolderFactory viewHolderFactory, MatchAdapterFactory matchAdapterFactory) {
+        return new LeagueAdapter(viewHolderFactory, matchAdapterFactory);
     }
 
     @Provides

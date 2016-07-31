@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 
 import com.arao.footballmatches.presentation.FootballMatchesApplication;
+import com.arao.footballmatches.presentation.navigation.Navigator;
 
 import dagger.Module;
 import dagger.Provides;
@@ -25,6 +26,11 @@ public class ApplicationModule {
     @Provides
     Context appContext() {
         return application;
+    }
+
+    @Provides
+    Navigator navigator() {
+        return new Navigator();
     }
 
 }

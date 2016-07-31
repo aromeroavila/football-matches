@@ -1,6 +1,5 @@
 package com.arao.footballmatches.presentation.view.adapter;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +12,7 @@ import com.arao.footballmatches.R;
 import com.arao.footballmatches.data.entity.Match;
 import com.arao.footballmatches.data.entity.Result;
 import com.arao.footballmatches.data.entity.Team;
+import com.arao.footballmatches.presentation.view.activity.MatchClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,10 +21,12 @@ class MatchAdapter extends BaseAdapter {
 
     private final Picasso picasso;
     private final List<Match> matches;
+    private final MatchClickListener matchClickListener;
 
-    MatchAdapter(List<Match> matches, Picasso picasso) {
+    MatchAdapter(List<Match> matches, Picasso picasso, MatchClickListener listener) {
         this.matches = matches;
         this.picasso = picasso;
+        this.matchClickListener = listener;
     }
 
     @Override
@@ -36,14 +38,13 @@ class MatchAdapter extends BaseAdapter {
         return size;
     }
 
-    @SuppressLint("ViewHolder")
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.matches_list_item, viewGroup, false);
 
         // TODO: extract to View Holder
-        Match match = matches.get(i);
+        final Match match = matches.get(i);
         Team homeTeam = match.getHomeTeam();
         Team awayTeam = match.getAwayTeam();
 
@@ -61,6 +62,12 @@ class MatchAdapter extends BaseAdapter {
         picasso.load(homeTeam.getLogoUrl()).into(homeTeamLogo);
         picasso.load(awayTeam.getLogoUrl()).into(awayTeamLogo);
 
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                matchClickListener.onMatchClick(match);
+            }
+        });
 
         itemView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
 
