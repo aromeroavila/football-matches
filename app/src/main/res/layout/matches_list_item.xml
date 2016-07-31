@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/x_small"
+    tools:ignore="RtlHardcoded">
+
+    <ImageView
+        android:id="@+id/team1_logo"
+        android:layout_width="@dimen/team_logo_in_list"
+        android:layout_height="@dimen/team_logo_in_list"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/x_small"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/team1_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/team1_score"
+        android:layout_toRightOf="@+id/team1_logo"
+        android:gravity="right"
+        tools:text="Norwich" />
+
+    <TextView
+        android:id="@+id/team1_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/medium"
+        android:layout_toLeftOf="@+id/match_team_separator"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        tools:text="0" />
+
+    <TextView
+        android:id="@id/match_team_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/small"
+        android:text="@string/match_team_separator"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        tools:text="-" />
+
+    <TextView
+        android:id="@+id/team2_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/medium"
+        android:layout_toRightOf="@id/match_team_separator"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        tools:text="0" />
+
+    <TextView
+        android:id="@+id/team2_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/team2_logo"
+        android:layout_toRightOf="@id/team2_score"
+        tools:text="Leicester" />
+
+    <ImageView
+        android:id="@id/team2_logo"
+        android:layout_width="@dimen/team_logo_in_list"
+        android:layout_height="@dimen/team_logo_in_list"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/x_small"
+        tools:ignore="ContentDescription" />
+
+</RelativeLayout>
