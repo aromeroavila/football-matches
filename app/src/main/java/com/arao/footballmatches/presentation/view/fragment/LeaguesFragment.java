@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.arao.footballmatches.R;
 import com.arao.footballmatches.data.entity.League;
 import com.arao.footballmatches.data.entity.Match;
+import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.navigation.Navigator;
 import com.arao.footballmatches.presentation.view.LeaguesView;
-import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.view.activity.MatchClickListener;
 import com.arao.footballmatches.presentation.view.adapter.LeagueAdapter;
 
@@ -64,6 +64,7 @@ public class LeaguesFragment extends Fragment implements LeaguesView, MatchClick
         View view = inflater.inflate(R.layout.fragment_leagues, container, false);
         ButterKnife.bind(this, view);
 
+        loadingLayout.setVisibility(VISIBLE);
         setupRecyclerView();
 
         return view;

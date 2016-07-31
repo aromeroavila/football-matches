@@ -3,6 +3,7 @@ package com.arao.footballmatches.presentation;
 import android.app.Application;
 
 import com.arao.footballmatches.injection.components.ApplicationComponent;
+import com.arao.footballmatches.injection.components.DaggerApplicationComponent;
 import com.arao.footballmatches.injection.modules.ApplicationModule;
 
 public class FootballMatchesApplication extends Application {
@@ -24,7 +25,9 @@ public class FootballMatchesApplication extends Application {
         super.onCreate();
 
         this.appComponent
-                = DaggerAppComponent.builder().applicationModule(new ApplicationModule(this)).build();
+                = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
     }
 
     public ApplicationComponent getAppComponent() {

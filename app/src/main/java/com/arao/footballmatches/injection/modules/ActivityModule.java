@@ -2,6 +2,7 @@ package com.arao.footballmatches.injection.modules;
 
 import com.arao.footballmatches.data.repository.MatchRepository;
 import com.arao.footballmatches.presentation.presenter.HomePresenter;
+import com.arao.footballmatches.presentation.presenter.MatchDetailPresenter;
 
 import dagger.Module;
 import dagger.Provides;
@@ -12,6 +13,11 @@ public class ActivityModule {
     @Provides
     HomePresenter homePresenter(MatchRepository matchRepository) {
         return new HomePresenter(matchRepository);
+    }
+
+    @Provides
+    MatchDetailPresenter matchDetailPresenter(MatchRepository matchRepository) {
+        return new MatchDetailPresenter(matchRepository);
     }
 
 }

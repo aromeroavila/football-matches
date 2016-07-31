@@ -3,9 +3,13 @@ package com.arao.footballmatches.presentation.view.activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.arao.footballmatches.R;
+import com.arao.footballmatches.injection.components.ActivityComponent;
+import com.arao.footballmatches.injection.components.ActivityComponentProvider;
+import com.arao.footballmatches.presentation.FootballMatchesApplication;
 import com.arao.footballmatches.presentation.presenter.HomePresenter;
 import com.arao.footballmatches.presentation.view.fragment.LeaguesFragment;
 
@@ -14,7 +18,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends AppCompatActivity implements ActivityComponentProvider {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -22,8 +26,11 @@ public class HomeActivity extends BaseActivity {
     @Inject
     HomePresenter homePresenter;
 
+    private ActivityComponent activityComponent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        resolveDependencies();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
@@ -31,6 +38,11 @@ public class HomeActivity extends BaseActivity {
         initToolbar();
         LeaguesFragment leaguesFragment = loadLeaguesFragment();
         homePresenter.init(leaguesFragment);
+    }
+
+    @Override
+    public ActivityComponent getActivityComponent() {
+        return activityComponent;
     }
 
     private void initToolbar() {
@@ -44,6 +56,14 @@ public class HomeActivity extends BaseActivity {
         transaction.add(R.id.home_fragment_container, leaguesFragment);
         transaction.commit();
         return leaguesFragment;
+    }
+
+    private void resolveDependencies() {
+        activityComponent = FootballMatchesApplication
+                .getApplication()
+                .getAppComponent()
+                .homeComponent();
+        activityComponent.resolveDependenciesFor(this);
     }
 
 }
