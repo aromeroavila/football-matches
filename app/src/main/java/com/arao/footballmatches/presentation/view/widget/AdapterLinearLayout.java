@@ -54,12 +54,12 @@ public class AdapterLinearLayout extends LinearLayout {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (mAdapter != null) {
-            mAdapter.unregisterDataSetObserver(mDataSetObserver);
-        }
+//        if (mAdapter != null) {
+//            mAdapter.unregisterDataSetObserver(mDataSetObserver);
+//        }
     }
 
-    protected void reloadChildViews() {
+    private void reloadChildViews() {
         removeAllViews();
 
         if (mAdapter == null) {

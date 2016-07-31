@@ -3,7 +3,7 @@ package com.arao.footballmatches.injection.modules;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.arao.footballmatches.data.repository.MatchRepository;
@@ -37,7 +37,7 @@ public class HomeModule {
 
     @Provides
     RecyclerView.LayoutManager layoutManager(Context context) {
-        return new GridLayoutManager(context, 1);
+        return new LinearLayoutManager(context);
     }
 
     @Provides
@@ -51,13 +51,8 @@ public class HomeModule {
     }
 
     @Provides
-    MatchAdapterFactory matchAdapterFactory() {
-        return new MatchAdapterFactory();
-    }
-
-    @Provides
-    Picasso picasso(Context context) {
-        return Picasso.with(context);
+    MatchAdapterFactory matchAdapterFactory(Picasso picasso) {
+        return new MatchAdapterFactory(picasso);
     }
 
 }

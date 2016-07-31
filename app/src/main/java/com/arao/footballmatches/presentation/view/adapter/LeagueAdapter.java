@@ -17,7 +17,6 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueViewHolder> {
 
     private final ViewHolderFactory viewHolderFactory;
     private final MatchAdapterFactory matchAdapterFactory;
-    private final Picasso picasso;
 
     private List<League> leagues;
 
@@ -25,7 +24,6 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueViewHolder> {
     public LeagueAdapter(ViewHolderFactory viewHolderFactory, MatchAdapterFactory matchAdapterFactory, Picasso picasso) {
         this.viewHolderFactory = viewHolderFactory;
         this.matchAdapterFactory = matchAdapterFactory;
-        this.picasso = picasso;
     }
 
     public void setData(List<League> leagues) {
@@ -44,7 +42,7 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueViewHolder> {
     @Override
     public void onBindViewHolder(LeagueViewHolder holder, int position) {
         League league = leagues.get(position);
-        MatchAdapter matchAdapter = matchAdapterFactory.getMatchAdapter(league.getMatches(), picasso);
+        MatchAdapter matchAdapter = matchAdapterFactory.getMatchAdapter(league.getMatches());
 
         String name = league.getName();
 

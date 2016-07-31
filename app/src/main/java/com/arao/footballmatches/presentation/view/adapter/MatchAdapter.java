@@ -20,17 +20,11 @@ import java.util.List;
 class MatchAdapter extends BaseAdapter {
 
     private final Picasso picasso;
-
-    private List<Match> matches;
+    private final List<Match> matches;
 
     MatchAdapter(List<Match> matches, Picasso picasso) {
         this.matches = matches;
         this.picasso = picasso;
-    }
-
-    public void setData(List<Match> matches) {
-        this.matches = matches;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -48,6 +42,7 @@ class MatchAdapter extends BaseAdapter {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.matches_list_item, viewGroup, false);
 
+        // TODO: extract to View Holder
         Match match = matches.get(i);
         Team homeTeam = match.getHomeTeam();
         Team awayTeam = match.getAwayTeam();

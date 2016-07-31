@@ -5,9 +5,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class MatchAdapterFactory {
 
-    MatchAdapter getMatchAdapter(List<Match> matches, Picasso picasso) {
+    private final Picasso picasso;
+
+    @Inject
+    public MatchAdapterFactory(Picasso picasso) {
+        this.picasso = picasso;
+    }
+
+    MatchAdapter getMatchAdapter(List<Match> matches) {
         return new MatchAdapter(matches, picasso);
     }
 

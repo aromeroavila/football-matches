@@ -2,7 +2,7 @@
 
     <string name="app_name">Football Matches</string>
 
-    <string name="loading_message">Loading shows…</string>
+    <string name="loading_message">Loading data…</string>
     <string name="error_message">There was a problem fetching the data, please try again.</string>
 
     <string name="home_toolbar_title">Matches</string>
