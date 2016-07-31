@@ -2,15 +2,14 @@ package com.arao.footballmatches.presentation;
 
 import android.app.Application;
 
-import com.arao.footballmatches.injection.components.AppComponent;
-import com.arao.footballmatches.injection.components.DaggerAppComponent;
+import com.arao.footballmatches.injection.components.ApplicationComponent;
 import com.arao.footballmatches.injection.modules.ApplicationModule;
 
 public class FootballMatchesApplication extends Application {
 
     private static FootballMatchesApplication instance;
 
-    private AppComponent appComponent;
+    private ApplicationComponent appComponent;
 
     public FootballMatchesApplication() {
         instance = this;
@@ -28,7 +27,7 @@ public class FootballMatchesApplication extends Application {
                 = DaggerAppComponent.builder().applicationModule(new ApplicationModule(this)).build();
     }
 
-    public AppComponent getAppComponent() {
+    public ApplicationComponent getAppComponent() {
         return appComponent;
     }
 }

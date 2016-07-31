@@ -6,8 +6,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.arao.footballmatches.data.repository.MatchRepository;
-import com.arao.footballmatches.presentation.presenter.HomePresenter;
 import com.arao.footballmatches.presentation.view.adapter.LeagueAdapter;
 import com.arao.footballmatches.presentation.view.adapter.LeagueItemDecoration;
 import com.arao.footballmatches.presentation.view.adapter.MatchAdapterFactory;
@@ -18,7 +16,7 @@ import dagger.Module;
 import dagger.Provides;
 
 @Module
-public class HomeModule {
+public class LeaguesModule {
 
     @Provides
     LeagueAdapter leagueAdapter(ViewHolderFactory viewHolderFactory, MatchAdapterFactory matchAdapterFactory) {
@@ -43,11 +41,6 @@ public class HomeModule {
     @Provides
     ViewHolderFactory viewHolderFactory() {
         return new ViewHolderFactory();
-    }
-
-    @Provides
-    HomePresenter homePresenter(MatchRepository matchRepository) {
-        return new HomePresenter(matchRepository);
     }
 
     @Provides
