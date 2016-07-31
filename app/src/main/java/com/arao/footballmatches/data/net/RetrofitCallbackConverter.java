@@ -1,8 +1,6 @@
 package com.arao.footballmatches.data.net;
 
-import com.arao.footballmatches.data.repository.DataCallback;
-
-import javax.inject.Inject;
+import com.arao.footballmatches.data.DataCallback;
 
 import retrofit2.Call;
 import retrofit2.Callback;

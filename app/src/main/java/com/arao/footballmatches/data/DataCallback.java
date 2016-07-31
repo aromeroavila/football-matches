@@ -1,4 +1,4 @@
-package com.arao.footballmatches.data.repository;
+package com.arao.footballmatches.data;
 
 public interface DataCallback<T> {
 

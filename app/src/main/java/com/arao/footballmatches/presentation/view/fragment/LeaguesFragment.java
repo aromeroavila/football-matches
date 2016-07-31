@@ -15,7 +15,7 @@ import com.arao.footballmatches.data.entity.League;
 import com.arao.footballmatches.data.entity.Match;
 import com.arao.footballmatches.presentation.navigation.Navigator;
 import com.arao.footballmatches.presentation.view.LeaguesView;
-import com.arao.footballmatches.presentation.view.activity.ActivityComponentProvider;
+import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.view.activity.MatchClickListener;
 import com.arao.footballmatches.presentation.view.adapter.LeagueAdapter;
 

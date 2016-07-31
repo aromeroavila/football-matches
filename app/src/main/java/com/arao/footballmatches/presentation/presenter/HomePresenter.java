@@ -1,7 +1,7 @@
 package com.arao.footballmatches.presentation.presenter;
 
 import com.arao.footballmatches.data.entity.League;
-import com.arao.footballmatches.data.repository.DataCallback;
+import com.arao.footballmatches.data.DataCallback;
 import com.arao.footballmatches.data.repository.MatchRepository;
 import com.arao.footballmatches.presentation.view.LeaguesView;
 

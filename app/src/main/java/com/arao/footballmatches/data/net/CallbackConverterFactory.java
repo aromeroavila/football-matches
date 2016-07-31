@@ -1,6 +1,6 @@
 package com.arao.footballmatches.data.net;
 
-import com.arao.footballmatches.data.repository.DataCallback;
+import com.arao.footballmatches.data.DataCallback;
 
 public class CallbackConverterFactory {
 

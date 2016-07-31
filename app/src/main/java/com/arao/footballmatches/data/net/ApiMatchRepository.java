@@ -2,7 +2,7 @@ package com.arao.footballmatches.data.net;
 
 import com.arao.footballmatches.data.entity.League;
 import com.arao.footballmatches.data.entity.MatchesFilter;
-import com.arao.footballmatches.data.repository.DataCallback;
+import com.arao.footballmatches.data.DataCallback;
 import com.arao.footballmatches.data.repository.MatchRepository;
 
 import java.util.List;
