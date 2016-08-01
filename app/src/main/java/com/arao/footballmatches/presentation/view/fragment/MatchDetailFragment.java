@@ -12,11 +12,10 @@ import android.widget.TextView;
 
 import com.arao.footballmatches.R;
 import com.arao.footballmatches.data.entity.League;
-import com.arao.footballmatches.data.entity.MatchesFilter;
+import com.arao.footballmatches.data.entity.Match;
 import com.arao.footballmatches.injection.components.ActivityComponentProvider;
-import com.arao.footballmatches.presentation.presenter.HomePresenter;
+import com.arao.footballmatches.presentation.presenter.MatchDetailPresenter;
 import com.arao.footballmatches.presentation.view.LeaguesView;
-import com.arao.footballmatches.presentation.view.activity.MatchClickListener;
 import com.arao.footballmatches.presentation.view.adapter.LeagueAdapter;
 
 import java.util.List;
@@ -29,9 +28,9 @@ import butterknife.ButterKnife;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class LeaguesFragment extends Fragment implements LeaguesView {
+public class MatchDetailFragment extends Fragment implements LeaguesView {
 
-    private static final String MATCHES_FILTER_BUNDLE_KEY = "matches_filter_bundle_key";
+    private static final String MATCH_BUNDLE_KEY = "match_bundle_key";
 
     @Inject
     LeagueAdapter leagueAdapter;
@@ -42,7 +41,7 @@ public class LeaguesFragment extends Fragment implements LeaguesView {
     @Inject
     RecyclerView.LayoutManager layoutManager;
     @Inject
-    HomePresenter homePresenter;
+    MatchDetailPresenter matchDetailPresenter;
 
     @BindView(R.id.loading_layout)
     LinearLayout loadingLayout;
@@ -51,15 +50,13 @@ public class LeaguesFragment extends Fragment implements LeaguesView {
     @BindView(R.id.leagues_recycler)
     RecyclerView leaguesRecyclerView;
 
-    private MatchClickListener matchClickListener;
 
-
-    public static Fragment newInstance(MatchesFilter matchesFilter) {
-        LeaguesFragment leaguesFragment = new LeaguesFragment();
+    public static Fragment newInstance(Match match) {
+        MatchDetailFragment matchDetailFragment = new MatchDetailFragment();
         Bundle args = new Bundle();
-        args.putSerializable(MATCHES_FILTER_BUNDLE_KEY, matchesFilter);
-        leaguesFragment.setArguments(args);
-        return leaguesFragment;
+        args.putParcelable(MATCH_BUNDLE_KEY, match);
+        matchDetailFragment.setArguments(args);
+        return matchDetailFragment;
     }
 
     @Override
@@ -69,10 +66,6 @@ public class LeaguesFragment extends Fragment implements LeaguesView {
         ((ActivityComponentProvider) getActivity()).getActivityComponent()
                 .leaguesFragmentComponent()
                 .resolveDependenciesFor(this);
-
-        if (getActivity() instanceof MatchClickListener) {
-            matchClickListener = (MatchClickListener) getActivity();
-        }
     }
 
     @Override
@@ -82,8 +75,8 @@ public class LeaguesFragment extends Fragment implements LeaguesView {
         loadingLayout.setVisibility(VISIBLE);
         setupRecyclerView();
 
-        MatchesFilter filter = (MatchesFilter) getArguments().getSerializable(MATCHES_FILTER_BUNDLE_KEY);
-        homePresenter.init(this, filter);
+        Match match = (Match) getArguments().getParcelable(MATCH_BUNDLE_KEY);
+        matchDetailPresenter.init(this, match);
 
         return view;
     }
@@ -93,7 +86,7 @@ public class LeaguesFragment extends Fragment implements LeaguesView {
         loadingLayout.setVisibility(GONE);
         errorView.setVisibility(GONE);
         leaguesRecyclerView.setVisibility(VISIBLE);
-        leagueAdapter.setData(leagues, matchClickListener);
+        leagueAdapter.setData(leagues, null);
     }
 
     @Override

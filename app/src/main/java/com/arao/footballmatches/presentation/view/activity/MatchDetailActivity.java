@@ -3,7 +3,7 @@ package com.arao.footballmatches.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +14,7 @@ import com.arao.footballmatches.injection.components.ActivityComponent;
 import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.FootballMatchesApplication;
 import com.arao.footballmatches.presentation.presenter.MatchDetailPresenter;
-import com.arao.footballmatches.presentation.view.fragment.LeaguesFragment;
+import com.arao.footballmatches.presentation.view.fragment.MatchDetailFragment;
 
 import javax.inject.Inject;
 
@@ -49,9 +49,7 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
         ButterKnife.bind(this);
 
         initToolbar();
-
-        LeaguesFragment leaguesFragment = loadLeaguesFragment();
-        matchDetailPresenter.init(leaguesFragment, match);
+        loadLeaguesFragment();
     }
 
     @Override
@@ -71,12 +69,10 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
         toolbar.setTitle(match.getName());
     }
 
-    @NonNull
-    private LeaguesFragment loadLeaguesFragment() {
-        LeaguesFragment leaguesFragment = new LeaguesFragment();
+    private void loadLeaguesFragment() {
+        Fragment matchDetailFragment = MatchDetailFragment.newInstance(match);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.detail_fragment_container, leaguesFragment);
+        transaction.add(R.id.detail_fragment_container, matchDetailFragment);
         transaction.commit();
-        return leaguesFragment;
     }
 }

@@ -93,9 +93,9 @@ class MatchAdapter extends BaseAdapter {
         Team awayTeam = match.getAwayTeam();
 
         Result homeTeamResults = homeTeam.getResults();
-        String homeTeamScore = homeTeamResults != null ? homeTeamResults.getRunningScore() : "-";
+        String homeTeamScore = homeTeamResults != null ? homeTeamResults.getRunningScore() : " ";
         Result awayTeamResults = homeTeam.getResults();
-        String awayTeamScore = awayTeamResults != null ? awayTeamResults.getRunningScore() : "-";
+        String awayTeamScore = awayTeamResults != null ? awayTeamResults.getRunningScore() : " ";
 
         picasso.load(homeTeam.getLogoUrl()).into(viewHolder.team1Logo);
         viewHolder.team1Name.setText(homeTeam.getName());

@@ -1,8 +1,8 @@
 package com.arao.footballmatches.presentation.view.activity;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,8 +12,8 @@ import com.arao.footballmatches.injection.components.ActivityComponent;
 import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.FootballMatchesApplication;
 import com.arao.footballmatches.presentation.navigation.Navigator;
-import com.arao.footballmatches.presentation.presenter.HomePresenter;
-import com.arao.footballmatches.presentation.view.fragment.LeaguesFragment;
+import com.arao.footballmatches.presentation.view.adapter.HomeFragmentAdapter;
+import com.arao.footballmatches.presentation.view.adapter.HomeFragmentAdapterFactory;
 
 import javax.inject.Inject;
 
@@ -24,11 +24,15 @@ public class HomeActivity extends AppCompatActivity implements ActivityComponent
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.leagues_filter_pager)
+    ViewPager viewPager;
+    @BindView(R.id.leagues_filter_tabs)
+    TabLayout tabLayout;
 
     @Inject
-    HomePresenter homePresenter;
-    @Inject
     Navigator navigator;
+    @Inject
+    HomeFragmentAdapterFactory adapterFactory;
 
     private ActivityComponent activityComponent;
 
@@ -40,8 +44,7 @@ public class HomeActivity extends AppCompatActivity implements ActivityComponent
         ButterKnife.bind(this);
 
         initToolbar();
-        LeaguesFragment leaguesFragment = loadLeaguesFragment();
-        homePresenter.init(leaguesFragment);
+        setupViewPager();
     }
 
     @Override
@@ -58,13 +61,11 @@ public class HomeActivity extends AppCompatActivity implements ActivityComponent
         toolbar.setTitle(R.string.home_toolbar_title);
     }
 
-    @NonNull
-    private LeaguesFragment loadLeaguesFragment() {
-        LeaguesFragment leaguesFragment = new LeaguesFragment();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.home_fragment_container, leaguesFragment);
-        transaction.commit();
-        return leaguesFragment;
+    private void setupViewPager() {
+        HomeFragmentAdapter homeFragmentAdapter = adapterFactory.getHomeFragmentAdapter(getSupportFragmentManager());
+        tabLayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(homeFragmentAdapter.getCount() - 1);
+        viewPager.setAdapter(homeFragmentAdapter);
     }
 
     private void resolveDependencies() {

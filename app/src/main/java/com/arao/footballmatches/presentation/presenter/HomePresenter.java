@@ -1,13 +1,12 @@
 package com.arao.footballmatches.presentation.presenter;
 
-import com.arao.footballmatches.data.entity.League;
 import com.arao.footballmatches.data.DataCallback;
+import com.arao.footballmatches.data.entity.League;
+import com.arao.footballmatches.data.entity.MatchesFilter;
 import com.arao.footballmatches.data.repository.MatchRepository;
 import com.arao.footballmatches.presentation.view.LeaguesView;
 
 import java.util.List;
-
-import static com.arao.footballmatches.data.entity.MatchesFilter.ALL;
 
 public class HomePresenter implements DataCallback<List<League>> {
 
@@ -19,10 +18,10 @@ public class HomePresenter implements DataCallback<List<League>> {
         this.matchRepository = matchRepository;
     }
 
-    public void init(LeaguesView leaguesView) {
+    public void init(LeaguesView leaguesView, MatchesFilter filter) {
         this.leaguesView = leaguesView;
 
-        matchRepository.matches(ALL, this);
+        matchRepository.matches(filter, this);
     }
 
     @Override
