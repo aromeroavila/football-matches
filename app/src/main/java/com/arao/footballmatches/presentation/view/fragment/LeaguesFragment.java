@@ -12,9 +12,7 @@ import android.widget.TextView;
 
 import com.arao.footballmatches.R;
 import com.arao.footballmatches.data.entity.League;
-import com.arao.footballmatches.data.entity.Match;
 import com.arao.footballmatches.injection.components.ActivityComponentProvider;
-import com.arao.footballmatches.presentation.navigation.Navigator;
 import com.arao.footballmatches.presentation.view.LeaguesView;
 import com.arao.footballmatches.presentation.view.activity.MatchClickListener;
 import com.arao.footballmatches.presentation.view.adapter.LeagueAdapter;
@@ -29,7 +27,7 @@ import butterknife.ButterKnife;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class LeaguesFragment extends Fragment implements LeaguesView, MatchClickListener {
+public class LeaguesFragment extends Fragment implements LeaguesView {
 
     @Inject
     LeagueAdapter leagueAdapter;
@@ -39,8 +37,6 @@ public class LeaguesFragment extends Fragment implements LeaguesView, MatchClick
     RecyclerView.ItemDecoration itemDecoration;
     @Inject
     RecyclerView.LayoutManager layoutManager;
-    @Inject
-    Navigator navigator;
 
     @BindView(R.id.loading_layout)
     LinearLayout loadingLayout;
@@ -48,6 +44,8 @@ public class LeaguesFragment extends Fragment implements LeaguesView, MatchClick
     TextView errorView;
     @BindView(R.id.leagues_recycler)
     RecyclerView leaguesRecyclerView;
+
+    private MatchClickListener matchClickListener;
 
 
     @Override
@@ -57,16 +55,18 @@ public class LeaguesFragment extends Fragment implements LeaguesView, MatchClick
         ((ActivityComponentProvider) getActivity()).getActivityComponent()
                 .leaguesFragmentComponent()
                 .resolveDependenciesFor(this);
+
+        if (getActivity() instanceof MatchClickListener) {
+            matchClickListener = (MatchClickListener) getActivity();
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_leagues, container, false);
         ButterKnife.bind(this, view);
-
         loadingLayout.setVisibility(VISIBLE);
         setupRecyclerView();
-
         return view;
     }
 
@@ -75,7 +75,7 @@ public class LeaguesFragment extends Fragment implements LeaguesView, MatchClick
         loadingLayout.setVisibility(GONE);
         errorView.setVisibility(GONE);
         leaguesRecyclerView.setVisibility(VISIBLE);
-        leagueAdapter.setData(leagues, this);
+        leagueAdapter.setData(leagues, matchClickListener);
     }
 
     @Override
@@ -83,11 +83,6 @@ public class LeaguesFragment extends Fragment implements LeaguesView, MatchClick
         errorView.setVisibility(VISIBLE);
         loadingLayout.setVisibility(GONE);
         leaguesRecyclerView.setVisibility(GONE);
-    }
-
-    @Override
-    public void onMatchClick(Match match) {
-        navigator.navigateToUserDetails(getActivity(), match);
     }
 
     private void setupRecyclerView() {

@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.arao.footballmatches.R;
+import com.arao.footballmatches.data.entity.Match;
 import com.arao.footballmatches.injection.components.ActivityComponent;
 import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.FootballMatchesApplication;
+import com.arao.footballmatches.presentation.navigation.Navigator;
 import com.arao.footballmatches.presentation.presenter.HomePresenter;
 import com.arao.footballmatches.presentation.view.fragment.LeaguesFragment;
 
@@ -18,13 +20,15 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity implements ActivityComponentProvider {
+public class HomeActivity extends AppCompatActivity implements ActivityComponentProvider, MatchClickListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
     @Inject
     HomePresenter homePresenter;
+    @Inject
+    Navigator navigator;
 
     private ActivityComponent activityComponent;
 
@@ -43,6 +47,11 @@ public class HomeActivity extends AppCompatActivity implements ActivityComponent
     @Override
     public ActivityComponent getActivityComponent() {
         return activityComponent;
+    }
+
+    @Override
+    public void onMatchClick(Match match) {
+        navigator.navigateToUserDetails(this, match);
     }
 
     private void initToolbar() {

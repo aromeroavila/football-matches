@@ -44,6 +44,7 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueViewHolder> {
     @Override
     public void onBindViewHolder(LeagueViewHolder holder, int position) {
         League league = leagues.get(position);
+        // TODO don't create an adapter every time
         MatchAdapter matchAdapter = matchAdapterFactory.getMatchAdapter(league.getMatches(), matchClickListener);
 
         String name = league.getName();

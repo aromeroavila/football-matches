@@ -19,8 +19,8 @@ public class HomePresenter implements DataCallback<List<League>> {
         this.matchRepository = matchRepository;
     }
 
-    public void init(LeaguesView homeView) {
-        this.leaguesView = homeView;
+    public void init(LeaguesView leaguesView) {
+        this.leaguesView = leaguesView;
 
         matchRepository.matches(ALL, this);
     }
