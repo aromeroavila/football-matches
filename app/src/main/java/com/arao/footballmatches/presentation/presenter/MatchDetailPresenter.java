@@ -18,8 +18,8 @@ public class MatchDetailPresenter implements DataCallback<List<League>> {
         this.matchRepository = matchRepository;
     }
 
-    public void init(LeaguesView homeView, Match match) {
-        this.leaguesView = homeView;
+    public void init(LeaguesView leaguesView, Match match) {
+        this.leaguesView = leaguesView;
 
         matchRepository.matchesFromTournament(Integer.toString(match.getTournamentId()), this);
     }

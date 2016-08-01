@@ -1,11 +1,11 @@
 package com.arao.footballmatches.presentation.view.adapter;
 
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.arao.footballmatches.R;
@@ -40,38 +40,29 @@ class MatchAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.matches_list_item, viewGroup, false);
+        ViewHolder viewHolder;
 
-        // TODO: extract to View Holder
+        if (view == null) {
+            view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.matches_list_item, viewGroup, false);
+            viewHolder = setupViewHolder(view);
+            view.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) view.getTag();
+        }
+
         final Match match = matches.get(i);
-        Team homeTeam = match.getHomeTeam();
-        Team awayTeam = match.getAwayTeam();
+        fillViewHolderData(viewHolder, match);
 
-        Result homeTeamResults = homeTeam.getResults();
-        String homeTeamScore = homeTeamResults != null ? homeTeamResults.getRunningScore() : "*";
-        Result awayTeamResults = homeTeam.getResults();
-        String awayTeamScore = awayTeamResults != null ? awayTeamResults.getRunningScore() : "*";
-
-        ((TextView) itemView.findViewById(R.id.team1_name)).setText(homeTeam.getName());
-        ((TextView) itemView.findViewById(R.id.team1_score)).setText(homeTeamScore);
-        ImageView homeTeamLogo = (ImageView) itemView.findViewById(R.id.team1_logo);
-        ((TextView) itemView.findViewById(R.id.team2_name)).setText(awayTeam.getName());
-        ((TextView) itemView.findViewById(R.id.team2_score)).setText(awayTeamScore);
-        ImageView awayTeamLogo = (ImageView) itemView.findViewById(R.id.team2_logo);
-        picasso.load(homeTeam.getLogoUrl()).into(homeTeamLogo);
-        picasso.load(awayTeam.getLogoUrl()).into(awayTeamLogo);
-
-        itemView.setOnClickListener(new View.OnClickListener() {
+        view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                matchClickListener.onMatchClick(match);
+                if (matchClickListener != null) {
+                    matchClickListener.onMatchClick(match);
+                }
             }
         });
 
-        itemView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
-
-        return itemView;
+        return view;
     }
 
     @Override
@@ -82,5 +73,44 @@ class MatchAdapter extends BaseAdapter {
     @Override
     public long getItemId(int i) {
         return 0;
+    }
+
+    @NonNull
+    private ViewHolder setupViewHolder(View view) {
+        ViewHolder viewHolder;
+        viewHolder = new ViewHolder();
+        viewHolder.team1Logo = (ImageView) view.findViewById(R.id.team1_logo);
+        viewHolder.team1Name = (TextView) view.findViewById(R.id.team1_name);
+        viewHolder.team1Score = (TextView) view.findViewById(R.id.team1_score);
+        viewHolder.team2Logo = (ImageView) view.findViewById(R.id.team2_logo);
+        viewHolder.team2Name = (TextView) view.findViewById(R.id.team2_name);
+        viewHolder.team2Score = (TextView) view.findViewById(R.id.team2_score);
+        return viewHolder;
+    }
+
+    private void fillViewHolderData(ViewHolder viewHolder, Match match) {
+        Team homeTeam = match.getHomeTeam();
+        Team awayTeam = match.getAwayTeam();
+
+        Result homeTeamResults = homeTeam.getResults();
+        String homeTeamScore = homeTeamResults != null ? homeTeamResults.getRunningScore() : "-";
+        Result awayTeamResults = homeTeam.getResults();
+        String awayTeamScore = awayTeamResults != null ? awayTeamResults.getRunningScore() : "-";
+
+        picasso.load(homeTeam.getLogoUrl()).into(viewHolder.team1Logo);
+        viewHolder.team1Name.setText(homeTeam.getName());
+        viewHolder.team1Score.setText(homeTeamScore);
+        picasso.load(awayTeam.getLogoUrl()).into(viewHolder.team2Logo);
+        viewHolder.team2Name.setText(awayTeam.getName());
+        viewHolder.team2Score.setText(awayTeamScore);
+    }
+
+    private class ViewHolder {
+        ImageView team1Logo;
+        TextView team1Name;
+        TextView team1Score;
+        ImageView team2Logo;
+        TextView team2Name;
+        TextView team2Score;
     }
 }
