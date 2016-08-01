@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.arao.footballmatches.R;
+import com.arao.footballmatches.data.entity.League;
 import com.arao.footballmatches.data.entity.Match;
 import com.arao.footballmatches.data.entity.Result;
 import com.arao.footballmatches.data.entity.Team;
@@ -17,16 +18,21 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-class MatchAdapter extends BaseAdapter {
+public class MatchAdapter extends BaseAdapter {
 
     private final Picasso picasso;
-    private final List<Match> matches;
     private final MatchClickListener matchClickListener;
 
-    MatchAdapter(List<Match> matches, Picasso picasso, MatchClickListener listener) {
-        this.matches = matches;
+    private List<Match> matches;
+
+    MatchAdapter(Picasso picasso, MatchClickListener listener) {
         this.picasso = picasso;
         this.matchClickListener = listener;
+    }
+
+    public void setData(List<Match> matches) {
+        this.matches = matches;
+        notifyDataSetChanged();
     }
 
     @Override

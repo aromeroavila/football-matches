@@ -9,6 +9,6 @@
     <dimen name="big_title_font">18sp</dimen>
 
     <dimen name="team_logo_in_list">24dp</dimen>
-    <dimen name="match_background_image_height">220dp</dimen>
+    <dimen name="toolbar_image_height">200dp</dimen>
 
 </resources>

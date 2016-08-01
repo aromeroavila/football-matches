@@ -38,19 +38,22 @@ public class LeagueAdapter extends RecyclerView.Adapter<LeagueViewHolder> {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.leagues_list_item, parent, false);
 
-        return viewHolderFactory.createLeagueViewHolder(itemView);
+        MatchAdapter matchAdapter = matchAdapterFactory.getMatchAdapter(matchClickListener);
+        LeagueViewHolder leagueViewHolder = viewHolderFactory.createLeagueViewHolder(itemView);
+        leagueViewHolder.matchesList.setAdapter(matchAdapter);
+
+        return leagueViewHolder;
     }
 
     @Override
     public void onBindViewHolder(LeagueViewHolder holder, int position) {
         League league = leagues.get(position);
-        // TODO don't create an adapter every time
-        MatchAdapter matchAdapter = matchAdapterFactory.getMatchAdapter(league.getMatches(), matchClickListener);
 
         String name = league.getName();
 
         holder.leagueName.setText(name);
-        holder.matchesList.setAdapter(matchAdapter);
+        MatchAdapter matchAdapter = (MatchAdapter) holder.matchesList.getAdapter();
+        matchAdapter.setData(league.getMatches());
     }
 
     @Override

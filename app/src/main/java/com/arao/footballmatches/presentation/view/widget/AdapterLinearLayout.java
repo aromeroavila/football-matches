@@ -7,9 +7,6 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.LinearLayout;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A linear layout that will contain views taken from an adapter. It differs from the list view in
  * the fact that it will not optimize anything and draw all the views from the adapter.
@@ -19,7 +16,6 @@ import java.util.List;
  */
 public class AdapterLinearLayout extends LinearLayout {
 
-    private List<View> childViews;
     private Adapter mAdapter;
     private DataSetObserver mDataSetObserver = new DataSetObserver() {
         @Override
@@ -37,6 +33,10 @@ public class AdapterLinearLayout extends LinearLayout {
         super(context, attrs);
     }
 
+    public Adapter getAdapter() {
+        return mAdapter;
+    }
+
     public void setAdapter(Adapter adapter) {
         if (adapter != null) {
             mAdapter = adapter;
@@ -46,19 +46,6 @@ public class AdapterLinearLayout extends LinearLayout {
         reloadChildViews();
     }
 
-    public List<View> getChildViews() {
-        return childViews;
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-
-//        if (mAdapter != null) {
-//            mAdapter.unregisterDataSetObserver(mDataSetObserver);
-//        }
-    }
-
     private void reloadChildViews() {
         removeAllViews();
 
@@ -66,13 +53,11 @@ public class AdapterLinearLayout extends LinearLayout {
             return;
         }
 
-        childViews = new ArrayList<>();
         int count = mAdapter.getCount();
         for (int position = 0; position < count; position++) {
             View v = mAdapter.getView(position, null, this);
             if (v != null) {
                 addView(v);
-                childViews.add(v);
             }
         }
 
