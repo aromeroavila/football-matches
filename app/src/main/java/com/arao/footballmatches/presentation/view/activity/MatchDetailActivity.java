@@ -4,10 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.arao.footballmatches.R;
 import com.arao.footballmatches.data.entity.Match;
@@ -18,24 +22,40 @@ import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.FootballMatchesApplication;
 import com.arao.footballmatches.presentation.presenter.MatchDetailPresenter;
 import com.arao.footballmatches.presentation.view.fragment.MatchDetailFragment;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MatchDetailActivity extends AppCompatActivity implements ActivityComponentProvider {
+public class MatchDetailActivity extends AppCompatActivity implements ActivityComponentProvider, AppBarLayout.OnOffsetChangedListener {
 
     private static final String INTENT_EXTRA_MATCH = "intent_extra_match";
     private static final String MATCH_SCORE_SEPARATOR = " - ";
 
+    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.1f;
+    private static final int ALPHA_ANIMATIONS_DURATION = 200;
+
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.app_bar)
+    AppBarLayout appBarLayout;
+    @BindView(R.id.collapsing_toolbar)
+    CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.inner_toolbar)
     Toolbar innerToolbar;
+    @BindView(R.id.tittle_inner_bar)
+    TextView tittleInnerBar;
+    @BindView(R.id.team1_logo)
+    ImageView team1Logo;
+    @BindView(R.id.team2_logo)
+    ImageView team2Logo;
 
     @Inject
     MatchDetailPresenter matchDetailPresenter;
+    @Inject
+    Picasso picasso;
 
     private ActivityComponent activityComponent;
     private Match match;
@@ -63,6 +83,26 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
         return activityComponent;
     }
 
+    @Override
+    public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+        int maxScroll = appBarLayout.getTotalScrollRange();
+        float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
+
+        handleToolbarTitleVisibility(percentage);
+    }
+
+    private void handleToolbarTitleVisibility(float percentage) {
+        if (percentage < PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
+            if (tittleInnerBar.getAlpha() != 1) {
+                tittleInnerBar.animate().alpha(1).setDuration(ALPHA_ANIMATIONS_DURATION);
+            }
+        } else {
+            if (tittleInnerBar.getAlpha() != 0) {
+                tittleInnerBar.animate().alpha(0).setDuration(ALPHA_ANIMATIONS_DURATION);
+            }
+        }
+    }
+
     private void resolveDependencies() {
         activityComponent = FootballMatchesApplication
                 .getApplication()
@@ -72,15 +112,21 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
     }
 
     private void initToolbar() {
-        toolbar.setTitle(match.getName());
-        innerToolbar.setTitle(getMatchScore());
-    }
-
-    @NonNull
-    private String getMatchScore() {
         Team homeTeam = match.getHomeTeam();
         Team awayTeam = match.getAwayTeam();
 
+        toolbar.setTitle(match.getName());
+        innerToolbar.setTitle(getMatchScore(homeTeam, awayTeam));
+        tittleInnerBar.setText(match.getName());
+        appBarLayout.addOnOffsetChangedListener(this);
+        tittleInnerBar.setAlpha(1);
+
+        picasso.load(homeTeam.getLogoUrl()).into(team1Logo);
+        picasso.load(awayTeam.getLogoUrl()).into(team2Logo);
+    }
+
+    @NonNull
+    private String getMatchScore(Team homeTeam, Team awayTeam) {
         Result homeTeamResults = homeTeam.getResults();
         String homeTeamScore = homeTeamResults != null ? homeTeamResults.getRunningScore() : " ";
         Result awayTeamResults = awayTeam.getResults();

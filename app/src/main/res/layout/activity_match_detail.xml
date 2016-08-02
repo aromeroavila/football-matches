@@ -33,6 +33,7 @@
         android:layout_weight="1">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fitsSystemWindows="true"
@@ -46,7 +47,8 @@
                 app:collapsedTitleGravity="center_horizontal"
                 app:collapsedTitleTextAppearance="@style/toolbar_collapsed_text"
                 app:contentScrim="?attr/colorPrimary"
-                app:expandedTitleGravity="center"
+                app:expandedTitleGravity="center_horizontal"
+                app:expandedTitleMarginBottom="@dimen/inner_toolbar_title_margin_bottom"
                 app:expandedTitleTextAppearance="@style/toolbar_expanded_text"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
@@ -62,11 +64,45 @@
                     android:layout_height="match_parent"
                     android:background="@color/colorPrimaryWithAlpha" />
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/team1_logo"
+                        android:layout_width="@dimen/team_logo_in_toolbar"
+                        android:layout_height="@dimen/team_logo_in_toolbar"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/team_logo_lateral_negative_margin"
+                        android:layout_marginTop="@dimen/large"
+                        tools:ignore="RtlHardcoded" />
+
+                    <ImageView
+                        android:id="@+id/team2_logo"
+                        android:layout_width="@dimen/team_logo_in_toolbar"
+                        android:layout_height="@dimen/team_logo_in_toolbar"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="@dimen/team_logo_lateral_negative_margin"
+                        android:layout_marginTop="@dimen/large"
+                        tools:ignore="RtlHardcoded" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tittle_inner_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/medium"
+                    android:gravity="bottom|center_horizontal"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp" />
+
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/inner_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    app:layout_collapseMode="pin"
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
