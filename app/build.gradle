@@ -35,6 +35,7 @@ dependencies {
     compile 'com.google.dagger:dagger:2.5'
     apt 'com.google.dagger:dagger-compiler:2.5'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.support.test:runner:0.5'
 
     testCompile 'junit:junit:4.12'
 
