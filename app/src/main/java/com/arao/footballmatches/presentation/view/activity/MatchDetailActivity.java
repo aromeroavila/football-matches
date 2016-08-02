@@ -3,6 +3,7 @@ package com.arao.footballmatches.presentation.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.arao.footballmatches.R;
 import com.arao.footballmatches.data.entity.Match;
+import com.arao.footballmatches.data.entity.Result;
+import com.arao.footballmatches.data.entity.Team;
 import com.arao.footballmatches.injection.components.ActivityComponent;
 import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.FootballMatchesApplication;
@@ -24,9 +27,12 @@ import butterknife.ButterKnife;
 public class MatchDetailActivity extends AppCompatActivity implements ActivityComponentProvider {
 
     private static final String INTENT_EXTRA_MATCH = "intent_extra_match";
+    private static final String MATCH_SCORE_SEPARATOR = " - ";
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.inner_toolbar)
+    Toolbar innerToolbar;
 
     @Inject
     MatchDetailPresenter matchDetailPresenter;
@@ -67,6 +73,20 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
 
     private void initToolbar() {
         toolbar.setTitle(match.getName());
+        innerToolbar.setTitle(getMatchScore());
+    }
+
+    @NonNull
+    private String getMatchScore() {
+        Team homeTeam = match.getHomeTeam();
+        Team awayTeam = match.getAwayTeam();
+
+        Result homeTeamResults = homeTeam.getResults();
+        String homeTeamScore = homeTeamResults != null ? homeTeamResults.getRunningScore() : " ";
+        Result awayTeamResults = awayTeam.getResults();
+        String awayTeamScore = awayTeamResults != null ? awayTeamResults.getRunningScore() : " ";
+
+        return homeTeamScore + MATCH_SCORE_SEPARATOR + awayTeamScore;
     }
 
     private void loadLeaguesFragment() {

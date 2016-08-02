@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#3B8900</color>
     <color name="colorAccent">#FFF300</color>
     <color name="separator_line">#F6F6F6</color>
+
+    <color name="colorPrimaryWithAlpha">#B3429900</color>
 </resources>
