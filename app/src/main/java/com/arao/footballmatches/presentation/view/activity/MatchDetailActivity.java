@@ -34,8 +34,8 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
     private static final String INTENT_EXTRA_MATCH = "intent_extra_match";
     private static final String MATCH_SCORE_SEPARATOR = " - ";
 
-    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.1f;
-    private static final int ALPHA_ANIMATIONS_DURATION = 200;
+    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.05f;
+    private static final int ALPHA_ANIMATIONS_DURATION = 150;
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -45,8 +45,10 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
     CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.inner_toolbar)
     Toolbar innerToolbar;
-    @BindView(R.id.tittle_inner_bar)
-    TextView tittleInnerBar;
+    @BindView(R.id.expanded_title)
+    TextView expandedTitle;
+    @BindView(R.id.collapsed_title)
+    TextView collapsedTitle;
     @BindView(R.id.team1_logo)
     ImageView team1Logo;
     @BindView(R.id.team2_logo)
@@ -59,6 +61,7 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
 
     private ActivityComponent activityComponent;
     private Match match;
+    private int maxScroll;
 
     public static Intent getCallingIntent(Context context, Match match) {
         Intent callingIntent = new Intent(context, MatchDetailActivity.class);
@@ -85,21 +88,25 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
 
     @Override
     public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-        int maxScroll = appBarLayout.getTotalScrollRange();
-        float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
+        if (maxScroll == 0) {
+            maxScroll = appBarLayout.getTotalScrollRange();
+        }
 
+        float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
         handleToolbarTitleVisibility(percentage);
     }
 
     private void handleToolbarTitleVisibility(float percentage) {
         if (percentage < PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
-            if (tittleInnerBar.getAlpha() != 1) {
-                tittleInnerBar.animate().alpha(1).setDuration(ALPHA_ANIMATIONS_DURATION);
-            }
+            expandedTitle.animate().alpha(1).setDuration(ALPHA_ANIMATIONS_DURATION);
         } else {
-            if (tittleInnerBar.getAlpha() != 0) {
-                tittleInnerBar.animate().alpha(0).setDuration(ALPHA_ANIMATIONS_DURATION);
-            }
+            expandedTitle.animate().alpha(0).setDuration(ALPHA_ANIMATIONS_DURATION);
+        }
+
+        if (percentage < 0.70) {
+            innerToolbar.setBackgroundResource(android.R.color.transparent);
+        } else {
+            innerToolbar.setBackgroundResource(R.color.colorPrimary);
         }
     }
 
@@ -116,10 +123,10 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
         Team awayTeam = match.getAwayTeam();
 
         toolbar.setTitle(match.getName());
-        innerToolbar.setTitle(getMatchScore(homeTeam, awayTeam));
-        tittleInnerBar.setText(match.getName());
+        expandedTitle.setText(match.getName());
+        expandedTitle.setAlpha(1);
+        collapsedTitle.setText(getMatchScore(homeTeam, awayTeam));
         appBarLayout.addOnOffsetChangedListener(this);
-        tittleInnerBar.setAlpha(1);
 
         picasso.load(homeTeam.getLogoUrl()).into(team1Logo);
         picasso.load(awayTeam.getLogoUrl()).into(team2Logo);

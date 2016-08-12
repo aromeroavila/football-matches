@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ToolbarImageBehavior">
+        <attr name="startXPosition" format="dimension" />
+        <attr name="finalXPosition" format="dimension" />
+        <attr name="startYPosition" format="dimension" />
+        <attr name="finalYPosition" format="dimension" />
+        <attr name="finalSize" format="dimension" />
+        <attr name="finalAlignmentToRight" format="boolean" />
+    </declare-styleable>
+</resources>
