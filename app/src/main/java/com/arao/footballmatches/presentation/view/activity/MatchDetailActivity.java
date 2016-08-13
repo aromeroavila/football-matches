@@ -20,8 +20,8 @@ import com.arao.footballmatches.data.entity.Team;
 import com.arao.footballmatches.injection.components.ActivityComponent;
 import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.FootballMatchesApplication;
-import com.arao.footballmatches.presentation.presenter.MatchDetailPresenter;
-import com.arao.footballmatches.presentation.view.fragment.MatchDetailFragment;
+import com.arao.footballmatches.presentation.presenter.MatchesPresenter;
+import com.arao.footballmatches.presentation.view.fragment.LeaguesFragment;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -55,7 +55,7 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
     ImageView team2Logo;
 
     @Inject
-    MatchDetailPresenter matchDetailPresenter;
+    MatchesPresenter matchesPresenter;
     @Inject
     Picasso picasso;
 
@@ -143,9 +143,9 @@ public class MatchDetailActivity extends AppCompatActivity implements ActivityCo
     }
 
     private void loadLeaguesFragment() {
-        Fragment matchDetailFragment = MatchDetailFragment.newInstance(match);
+        Fragment leaguesFragment = LeaguesFragment.newInstance(match);
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.detail_fragment_container, matchDetailFragment);
+        transaction.replace(R.id.detail_fragment_container, leaguesFragment);
         transaction.commit();
     }
 }

@@ -3,24 +3,29 @@ package com.arao.footballmatches.presentation.presenter;
 import com.arao.footballmatches.data.DataCallback;
 import com.arao.footballmatches.data.entity.League;
 import com.arao.footballmatches.data.entity.Match;
+import com.arao.footballmatches.data.entity.MatchesFilter;
 import com.arao.footballmatches.data.repository.MatchRepository;
 import com.arao.footballmatches.presentation.view.LeaguesView;
 
 import java.util.List;
 
-public class MatchDetailPresenter implements DataCallback<List<League>> {
+public class MatchesPresenter implements DataCallback<List<League>> {
 
     private final MatchRepository matchRepository;
 
     private LeaguesView leaguesView;
 
-    public MatchDetailPresenter(MatchRepository matchRepository) {
+    public MatchesPresenter(MatchRepository matchRepository) {
         this.matchRepository = matchRepository;
     }
 
-    public void init(LeaguesView leaguesView, Match match) {
+    public void initWithFilter(LeaguesView leaguesView, MatchesFilter filter) {
         this.leaguesView = leaguesView;
+        matchRepository.matches(filter, this);
+    }
 
+    public void initWithMatch(LeaguesView leaguesView, Match match) {
+        this.leaguesView = leaguesView;
         matchRepository.matchesFromTournament(Integer.toString(match.getTournamentId()), this);
     }
 
@@ -33,5 +38,4 @@ public class MatchDetailPresenter implements DataCallback<List<League>> {
     public void onError() {
         leaguesView.displayError();
     }
-
 }
