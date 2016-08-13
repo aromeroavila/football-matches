@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.arao.footballmatches.R;
 import com.arao.footballmatches.data.entity.League;
 import com.arao.footballmatches.data.entity.Match;
-import com.arao.footballmatches.data.entity.MatchesFilter;
+import com.arao.footballmatches.data.entity.MatchFilter;
 import com.arao.footballmatches.injection.components.ActivityComponentProvider;
 import com.arao.footballmatches.presentation.presenter.MatchesPresenter;
 import com.arao.footballmatches.presentation.view.LeaguesView;
@@ -56,7 +56,7 @@ public class LeaguesFragment extends Fragment implements LeaguesView {
     private MatchClickListener matchClickListener;
 
 
-    public static Fragment newInstance(MatchesFilter matchesFilter) {
+    public static Fragment newInstance(MatchFilter matchesFilter) {
         LeaguesFragment leaguesFragment = new LeaguesFragment();
         Bundle args = new Bundle();
         args.putSerializable(MATCHES_FILTER_BUNDLE_KEY, matchesFilter);
@@ -118,7 +118,7 @@ public class LeaguesFragment extends Fragment implements LeaguesView {
     }
 
     private void initPresenter() {
-        MatchesFilter filter = (MatchesFilter) getArguments().getSerializable(MATCHES_FILTER_BUNDLE_KEY);
+        MatchFilter filter = (MatchFilter) getArguments().getSerializable(MATCHES_FILTER_BUNDLE_KEY);
         if (filter != null) {
             homePresenter.initWithFilter(this, filter);
         }

@@ -1,7 +1,7 @@
 package com.arao.footballmatches.data.net;
 
 import com.arao.footballmatches.data.entity.League;
-import com.arao.footballmatches.data.entity.MatchesFilter;
+import com.arao.footballmatches.data.entity.MatchFilter;
 import com.arao.footballmatches.data.DataCallback;
 import com.arao.footballmatches.data.repository.MatchRepository;
 
@@ -24,7 +24,7 @@ public class ApiMatchRepository implements MatchRepository {
     }
 
     @Override
-    public void matches(MatchesFilter filter, DataCallback<List<League>> callback) {
+    public void matches(MatchFilter filter, DataCallback<List<League>> callback) {
         WhatsTheScoreApi service = retrofit.create(WhatsTheScoreApi.class);
         Call<List<League>> leaguesCall;
 

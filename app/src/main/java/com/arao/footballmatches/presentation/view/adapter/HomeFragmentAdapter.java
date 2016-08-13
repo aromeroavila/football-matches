@@ -4,17 +4,17 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.arao.footballmatches.data.entity.MatchesFilter;
+import com.arao.footballmatches.data.entity.MatchFilter;
 import com.arao.footballmatches.presentation.view.fragment.LeaguesFragment;
 
-import static com.arao.footballmatches.data.entity.MatchesFilter.ALL;
-import static com.arao.footballmatches.data.entity.MatchesFilter.FINISHED;
-import static com.arao.footballmatches.data.entity.MatchesFilter.LIVE;
+import static com.arao.footballmatches.data.entity.MatchFilter.ALL;
+import static com.arao.footballmatches.data.entity.MatchFilter.FINISHED;
+import static com.arao.footballmatches.data.entity.MatchFilter.LIVE;
 
 public class HomeFragmentAdapter extends FragmentPagerAdapter {
 
     private static final int NUM_ITEMS = 3;
-    private static final MatchesFilter FILTERS[] = new MatchesFilter[]{ALL, LIVE, FINISHED};
+    private static final MatchFilter FILTERS[] = new MatchFilter[]{ALL, LIVE, FINISHED};
 
     HomeFragmentAdapter(FragmentManager fm) {
         super(fm);

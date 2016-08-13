@@ -1,13 +1,13 @@
 package com.arao.footballmatches.data.entity;
 
-public enum MatchesFilter {
+public enum MatchFilter {
     ALL("all"),
     LIVE("live"),
     FINISHED("finished");
 
     private final String name;
 
-    MatchesFilter(String s) {
+    MatchFilter(String s) {
         name = s;
     }
 

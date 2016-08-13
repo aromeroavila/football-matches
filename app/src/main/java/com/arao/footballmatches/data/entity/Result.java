@@ -9,12 +9,6 @@ public class Result implements Parcelable {
 
     @SerializedName("runningscore")
     private String runningScore;
-    @SerializedName("halftime")
-    private String halfTime;
-
-    public String getHalfTime() {
-        return halfTime;
-    }
 
     public String getRunningScore() {
         return runningScore;
@@ -28,12 +22,10 @@ public class Result implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.runningScore);
-        dest.writeString(this.halfTime);
     }
 
     protected Result(Parcel in) {
         this.runningScore = in.readString();
-        this.halfTime = in.readString();
     }
 
     public static final Parcelable.Creator<Result> CREATOR = new Parcelable.Creator<Result>() {

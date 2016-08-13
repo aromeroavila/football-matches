@@ -12,30 +12,8 @@ public class League implements Parcelable {
 
     @SerializedName("name")
     private String name;
-    @SerializedName("additionalName")
-    private String additionalName;
-    @SerializedName("image")
-    private Image image;
-    @SerializedName("relatedToObjectCode")
-    private String relatedToObjectCode;
-    @SerializedName("relatedToObjectId")
-    private String relatedToObjectId;
-    @SerializedName("hasStandings")
-    private boolean hasStandings;
     @SerializedName("matches")
     private List<Match> matches = new ArrayList<>();
-
-    public String getAdditionalName() {
-        return additionalName;
-    }
-
-    public boolean isHasStandings() {
-        return hasStandings;
-    }
-
-    public Image getImage() {
-        return image;
-    }
 
     public List<Match> getMatches() {
         return matches;
@@ -43,14 +21,6 @@ public class League implements Parcelable {
 
     public String getName() {
         return name;
-    }
-
-    public String getRelatedToObjectCode() {
-        return relatedToObjectCode;
-    }
-
-    public String getRelatedToObjectId() {
-        return relatedToObjectId;
     }
 
     @Override
@@ -61,21 +31,11 @@ public class League implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
-        dest.writeString(this.additionalName);
-        dest.writeParcelable(this.image, flags);
-        dest.writeString(this.relatedToObjectCode);
-        dest.writeString(this.relatedToObjectId);
-        dest.writeByte(this.hasStandings ? (byte) 1 : (byte) 0);
         dest.writeTypedList(this.matches);
     }
 
     protected League(Parcel in) {
         this.name = in.readString();
-        this.additionalName = in.readString();
-        this.image = in.readParcelable(Image.class.getClassLoader());
-        this.relatedToObjectCode = in.readString();
-        this.relatedToObjectId = in.readString();
-        this.hasStandings = in.readByte() != 0;
         this.matches = in.createTypedArrayList(Match.CREATOR);
     }
 

@@ -14,7 +14,7 @@ import org.mockito.junit.MockitoRule;
 
 import java.util.List;
 
-import static com.arao.footballmatches.data.entity.MatchesFilter.ALL;
+import static com.arao.footballmatches.data.entity.MatchFilter.ALL;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
